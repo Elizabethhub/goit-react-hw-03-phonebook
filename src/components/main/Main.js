@@ -30,6 +30,19 @@ class Main extends Component {
       contacts: prev.contacts.filter((contact) => contact.id !== id),
     }));
   };
+  componentDidMount() {
+    const contacts = localStorage.getItem("contacts");
+    const parsedContacts = JSON.parse(contacts);
+
+    this.setState({ contacts: parsedContacts });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      console.log("cntList updated");
+      localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
+    }
+  }
 
   render() {
     const { contacts, filter } = this.state;
